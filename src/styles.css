@@ -1,0 +1,48 @@
+.main{
+    border-bottom:#DDD 1px solid;
+    padding: 30px 0;
+}
+
+.artist-header .album-header{
+    padding-bottom:20px;
+    margin-bottom:20px;
+    border-bottom:solid 1px #EEE;
+}
+
+.artist-thumb{
+    width:80px;
+    max-height:40px;
+    float:left;
+    margin-right:10px;
+}
+
+.artist-albums .well{
+    margin-bottom:20px;
+    overflow:hidden;
+    height:350px;
+}
+
+.album{
+    text-align: center;
+    background:#DDD;
+    padding: 10px 20px;
+    border:#EEE 1px solid;
+}
+
+.album-thumb{
+    width:100%;
+}
+
+.img-thumbnail{
+    height:220px;
+    overflow:hidden;
+}
+
+a {
+    color: #231;
+}
+
+a:hover {
+    color: #444;
+}
+
