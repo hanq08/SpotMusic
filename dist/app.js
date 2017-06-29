@@ -14,7 +14,7 @@ var cookieParser = require('cookie-parser');
 
 var client_id = 'fe2d7ef199f649839f9a7d671a18eb9b'; // Your client id
 var client_secret = '0ce362923c2444f280f6ddf5c562ab38'; // Your secret
-var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
+var redirect_uri = 'https://spotmusic.herokuapp.com/callback'; // Your redirect uri
 
 var access_token = '';
 var refresh_token = '';
