@@ -15,9 +15,10 @@ var cookieParser = require('cookie-parser');
 var client_id = 'fe2d7ef199f649839f9a7d671a18eb9b'; // Your client id
 var client_secret = '0ce362923c2444f280f6ddf5c562ab38'; // Your secret
 var redirect_uri = 'https://spotmusic.herokuapp.com/callback'; // Your redirect uri
+//var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
 
 var access_token = '';
-var refresh_token = '';
+var refresh_token = 'AQCdbZaOkVg491QWRIAX0_P8Yfxo7Q7nrOIYZFss9F6O0BmotkrB-nymfACr-WABCuI5x-Imi7PF-cqyvVqVU7hXNJwfxDiLbOo8Wjh2iL_WrQ0wf8Uc8I0XOnQt0FTOwdU';
 
 /**
  * Generates a random string containing numbers and letters
@@ -46,7 +47,6 @@ app.get('/', function(req, res){
     if (!access_token){
         res.redirect('/login');
     }   
-
 });
 
 var port = process.env.PORT || 8888;
@@ -104,7 +104,7 @@ app.get('/callback', function(req, res) {
 
         access_token = body.access_token;
         refresh_token = body.refresh_token;
-
+        console.log(refresh_token);
         var options = {
           url: 'https://api.spotify.com/v1/me',
           headers: { 'Authorization': 'Bearer ' + access_token },
@@ -132,6 +132,7 @@ app.get('/refresh_token', function(req, res) {
 
   // requesting access token from refresh token
   // var refresh_token = req.query.refresh_token;
+  console.log('refreshing');
   var authOptions = {
     url: 'https://accounts.spotify.com/api/token',
     headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
@@ -144,18 +145,16 @@ app.get('/refresh_token', function(req, res) {
 
   request.post(authOptions, function(error, response, body) {
     if (!error && response.statusCode === 200) {
-      access_token = body.access_token;
+       access_token = body.access_token;
+       console.log("new access token");
     } else {
-        console.log(body);
+        console.log('refresh call back' + body);
     }
   });
 });
 
-function loginOrRefresh(){
-
-}
-
 app.get('/search', function(req, response){
+  console.log(access_token);
     var artist = req.query.query;
     var url = 'https://api.spotify.com/v1/search?query=' + artist + '&offset=0&limit=20&type=artist&market=US';
     var options = {
@@ -169,13 +168,7 @@ app.get('/search', function(req, response){
           if (res.statusCode === 200){
             response.send(body);
           } else {
-            var refoptions = {
-                url: 'http://locahost:' + port + '/refresh_token',
-            };
-            request.get(refoptions, function(error, res, body) {
-                console.log("refresh token");
-            });
-            response.redirect('/search?query=' + artist);
+            response.redirect('/refresh_token'); 
           } 
         });
     //response.end();
@@ -194,13 +187,7 @@ app.get('/artist', function(req, response){
           if (res.statusCode === 200){
             response.send(body);
           } else {
-            var refoptions = {
-                url: 'http://locahost:' + port + '/refresh_token',
-            };
-            request.get(refoptions, function(error, res, body) {
-                console.log("refresh token");
-            });
-            response.redirect('/artist?query=' + id);
+            response.redirect('/refresh_token'); 
           } 
           //response.send(body);
         });
@@ -220,13 +207,7 @@ app.get('/album', function(req, response){
           if (res.statusCode === 200){
             response.send(body);
           } else {
-            var refoptions = {
-                url: 'http://locahost:' + port + '/refresh_token',
-            };
-            request.get(refoptions, function(error, res, body) {
-                console.log("refresh token");
-            });
-            response.redirect('/album?query=' + id);
+            response.redirect('/refresh_token'); 
           } 
           //response.send(body);
         });
@@ -246,13 +227,7 @@ app.get('/albums', function(req, response){
           if (res.statusCode === 200){
             response.send(body);
           } else {
-            var refoptions = {
-                url: 'http://locahost:' + port + '/refresh_token',
-            };
-            request.get(refoptions, function(error, res, body) {
-                console.log("refresh token");
-            });
-            response.redirect('/albums?query=' + id);
+            response.redirect('/refresh_token'); 
           } 
           //response.send(body);
         });
