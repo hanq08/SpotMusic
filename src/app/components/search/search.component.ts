@@ -13,7 +13,7 @@ export class SearchComponent  {
   searchRes:Artist[];
 
   constructor(private _spotifyService:SpotifyService){
-
+    
   }
   searchMusic(){
     console.log(this.searchStr);

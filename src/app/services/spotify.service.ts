@@ -14,6 +14,7 @@ export class SpotifyService{
     private options: RequestOptions;
     
     constructor(private _http:Http){
+        this._http.get('/login');
         this.options = new RequestOptions({ headers: this.headers });
         this.headers.append('Authorization', `Bearer AQDf3WGmIybVZuWFQFNDGocZOuyITDHIWbCS5l6AWlUk8S-ZrmClBJK20R3Slx6jvbpMRWPvDCyYh0lI`);
     }
